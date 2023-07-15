@@ -4,7 +4,7 @@ lazy val rootProject = (project in file("."))
   .settings(
     name := "cats-crud",
     organization := "io.github.leonardobat",
-    scalaVersion := "3.2.2",
+    scalaVersion := "3.3.0",
     git.useGitDescribe := true,
 
     libraryDependencies ++= Seq(
