@@ -2,4 +2,4 @@ services:
   web:
     image: "io.github.leonardobat/cats-crud:latest"
     ports:
-      - "8080:8080"
+      - "9001:8080"

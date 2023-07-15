@@ -2,7 +2,11 @@ package io.github.leonardobat.cats.crud
 
 import cats.effect.IO.asyncForIO
 import cats.effect.{Async, ExitCode, IO, IOApp}
-import com.comcast.ip4s.Port
+import com.comcast.ip4s.{Host, Port, port}
+import com.typesafe.config.ConfigFactory
+import io.circe.config.parser
+import io.circe.config.syntax.*
+import io.circe.generic.auto.*
 import io.github.leonardobat.cats.crud.controller.UserController
 import io.github.leonardobat.cats.crud.repository.InMemoryUserRepository
 import io.github.leonardobat.cats.crud.service.UserService
@@ -10,17 +14,19 @@ import org.http4s.HttpApp
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.implicits.*
 import org.http4s.server.Router
-import sttp.tapir.docs.openapi.*
-import sttp.tapir.server.http4s.Http4sServerInterpreter
+import org.http4s.Request
 
 object Main extends IOApp {
 
   def run(args: List[String]): IO[ExitCode] = {
     val server = for {
       appRoutes <- createApp[IO]
+      config <- parser.decodePathF[IO, ServerSettings]("app.server")
       exitCode <- EmberServerBuilder
         .default[IO]
         .withHttpApp(appRoutes)
+        .withHostOption(Host.fromString(config.host))
+        .withPort(Port.fromInt(config.port).getOrElse(port"9001"))
         .build
         .use(_ => IO.never)
         .as(ExitCode.Success)
@@ -41,4 +47,6 @@ object Main extends IOApp {
 
     Async[F].pure(appRoutes)
   }
+
+  private case class ServerSettings(host: String, port: Int)
 }

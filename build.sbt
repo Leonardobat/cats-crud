@@ -13,6 +13,7 @@ lazy val rootProject = (project in file("."))
       "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % "1.5.0",
       "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % "1.5.0",
       "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % "1.5.0",
+      "io.circe" %% "circe-config" % "0.10.0",
       "io.circe" %% "circe-core" % "0.14.5",
       "io.circe" %% "circe-generic" % "0.14.5",
       "io.circe" %% "circe-parser" % "0.14.5",
@@ -39,9 +40,8 @@ lazy val rootProject = (project in file("."))
       val artifactTargetPath = s"/app/${artifact.name}"
 
       new Dockerfile {
-        from("eclipse-temurin:11-jre-alpine")
+        from("ibm-semeru-runtimes:open-11-jre")
         copy(artifact, artifactTargetPath)
-        expose(8080)
         entryPoint("java", "-jar", artifactTargetPath)
       }
     },
