@@ -13,21 +13,20 @@ lazy val rootProject = (project in file("."))
       "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % "1.5.0",
       "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % "1.5.0",
       "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % "1.5.0",
-      "ch.qos.logback" % "logback-classic" % "1.4.7",
-      "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
       "io.circe" %% "circe-config" % "0.10.0",
       "io.circe" %% "circe-core" % "0.14.5",
       "io.circe" %% "circe-generic" % "0.14.5",
       "io.circe" %% "circe-parser" % "0.14.5",
       "org.http4s" %% "http4s-ember-server" % "0.23.19",
+      "org.legogroup" %% "woof-core" % "0.6.0",
+      "org.legogroup" %% "woof-slf4j-2" % "0.6.0",
       "org.scalatest" %% "scalatest" % "3.2.16" % Test,
       "org.scalatestplus" %% "scalacheck-1-17" % "3.2.16.0" % Test,
       "org.scalatestplus" %% "mockito-4-11" % "3.2.16.0" % Test,
       "org.http4s" %% "http4s-circe" % "0.23.19" % Test,
     ),
 
-    Compile / scalacOptions += "-source:3.0-migration",
-    Compile / scalacOptions += "-rewrite",
+    Compile / scalacOptions += "-explain",
 
     assembly / assemblyMergeStrategy := {
       case PathList("META-INF", "maven", "org.webjars", "swagger-ui", "pom.properties") =>
