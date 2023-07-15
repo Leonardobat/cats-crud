@@ -13,6 +13,8 @@ lazy val rootProject = (project in file("."))
       "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % "1.5.0",
       "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % "1.5.0",
       "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % "1.5.0",
+      "ch.qos.logback" % "logback-classic" % "1.4.7",
+      "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
       "io.circe" %% "circe-config" % "0.10.0",
       "io.circe" %% "circe-core" % "0.14.5",
       "io.circe" %% "circe-generic" % "0.14.5",

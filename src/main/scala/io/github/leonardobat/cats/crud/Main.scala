@@ -4,6 +4,7 @@ import cats.effect.IO.asyncForIO
 import cats.effect.{Async, ExitCode, IO, IOApp}
 import com.comcast.ip4s.{Host, Port, port}
 import com.typesafe.config.ConfigFactory
+import com.typesafe.scalalogging.LazyLogging
 import io.circe.config.parser
 import io.circe.config.syntax.*
 import io.circe.generic.auto.*
@@ -16,10 +17,11 @@ import org.http4s.implicits.*
 import org.http4s.server.Router
 import org.http4s.Request
 
-object Main extends IOApp {
+object Main extends IOApp with LazyLogging {
 
   def run(args: List[String]): IO[ExitCode] = {
     val server = for {
+      _ <- IO(logger.info("Starting web server"))
       appRoutes <- createApp[IO]
       config <- parser.decodePathF[IO, ServerSettings]("app.server")
       exitCode <- EmberServerBuilder
